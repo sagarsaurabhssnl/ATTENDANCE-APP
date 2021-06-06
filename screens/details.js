@@ -6,8 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  ActivityIndicator
 } from "react-native";
 import db from "../config";
+
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class Details extends React.Component {
   constructor() {
@@ -21,9 +24,21 @@ export default class Details extends React.Component {
       present: 0,
       absent: 0,
       absentArr: "Absenties' Roll numbers: ",
+      appState: 0,
+      showAlert: false
     };
   }
+  showAlert = () => {
+    this.setState({
+      showAlert: true
+    });
+  };
 
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
   refresh() {
     this.setState({
       refreshing: true,
@@ -43,9 +58,14 @@ export default class Details extends React.Component {
       strength: ".....",
       present: 0,
       absent: 0,
+      appState: 0,
       absentArr: "Absenties' Roll numbers: ",
     });
-
+    setTimeout(() => {
+      if (this.state.appState === 0) {
+        this.showAlert()
+      }
+    }, 5000)
     var dataRef = db.ref("/main");
     dataRef.on("value", (data) => {
       this.setState({
@@ -59,6 +79,7 @@ export default class Details extends React.Component {
           absentArr: "Absenties' Roll numbers: ",
           present: 0,
           absent: 0,
+          appState: 1
         });
         this.presentAbsent(this.state.strength);
       }, 500);
@@ -93,43 +114,65 @@ export default class Details extends React.Component {
     this.referClassData();
   }
   render() {
+    const { showAlert } = this.state;
     return (
       <View style={styles.main}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={() => {
-                this.refresh();
+        {this.state.appState === 1 ? (
+          <View>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => {
+                    this.refresh();
+                  }}
+                />
+              }
+            >
+              <Text style={styles.text}>Class: {this.state.class}</Text>
+              <Text style={styles.text}>Section: {this.state.section}</Text>
+              <Text style={styles.text}>Strength: {this.state.strength}</Text>
+              <Text style={styles.text}>Present: {this.state.present}</Text>
+              <Text style={styles.text}>Absent: {this.state.absent}</Text>
+              <Text style={[styles.text, { fontSize: 10 }]}>
+                {this.state.absentArr}
+              </Text>
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                this.referClassData();
               }}
-            />
-          }
-        >
-          <Text style={styles.text}>Class: {this.state.class}</Text>
-          <Text style={styles.text}>Section: {this.state.section}</Text>
-          <Text style={styles.text}>Strength: {this.state.strength}</Text>
-          <Text style={styles.text}>Present: {this.state.present}</Text>
-          <Text style={styles.text}>Absent: {this.state.absent}</Text>
-          <Text style={[styles.text, { fontSize: 10 }]}>
-            {this.state.absentArr}
-          </Text>
-        </ScrollView>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
+            >
+              <Text>Re-Configure</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "#7777e5" }]}
+              onPress={() => {
+                this.updateAbsent();
+              }}
+            >
+              <Text>Mark all as absent</Text>
+            </TouchableOpacity></View>) : (<View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
+              <ActivityIndicator size={60} color="#666" />
+            </View>)}
+        <AwesomeAlert
+          show={showAlert}
+          title="Network Error!"
+          message="Check your network connection and try again."
+          closeOnTouchOutside={false}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonStyle={{ width: 80, alignItems: "center", justifyContent: "center" }}
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            this.hideAlert();
             this.referClassData();
           }}
-        >
-          <Text>Re-Configure</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            this.updateAbsent();
-          }}
-        >
-          <Text>Mark all as absent</Text>
-        </TouchableOpacity>
+          contentContainerStyle={{ backgroundColor: "#000", borderRadius: 20 }}
+          titleStyle={{ color: "#a44" }}
+        />
       </View>
     );
   }
