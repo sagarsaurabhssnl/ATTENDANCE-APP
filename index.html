@@ -4,39 +4,127 @@
     <title>HOME</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
+    <script>
+      function display() {
+        var a = document.getElementById("vid");
+        a.style.display = "block";
+      }
+      function hide() {
+        var a = document.getElementById("vid");
+        a.style.display = "none";
+      }
+    </script>
   </head>
-
   <body>
+    <div
+      style="
+        align-items: center;
+        justify-content: center;
+        /* margin-right: 5%; */
+        position: fixed;
+        z-index: 10;
+        align-self: center;
+      "
+      id="vid"
+    >
+      <div>
+        <button
+          style="
+            z-index: 20;
+            width: 10%;
+            height: 10%;
+            background-color: #ffffff00;
+            border: none;
+            position: absolute;
+            align-self: flex-start;
+            font-size: 300%;
+            color: #fff;
+            border-radius: 5px;
+          "
+          onclick="hide()"
+        >
+          ✕
+        </button>
+        <a
+          href="https://drive.google.com/file/d/15tEKdcl4Wqo1_dSejnEpirKLUZUsJ8bb/view?usp=sharing  "
+          target="_blank"
+        >
+          <button
+            style="
+              color: #00ff00;
+              z-index: 50;
+              font-size: 5vh;
+              align-self: flex-end;
+              flex-direction: column-reverse;
+              font-weight: bold;
+              position: absolute;
+              width: 10vh;
+              height: 10vh;
+              margin-top: 20%;
+              background-color: #ffffff00;
+              border: none;
+              font-family: fantasy;
+            "
+          >
+            HD
+          </button>
+        </a>
+      </div>
+      <iframe
+        style="
+          width: 100vw;
+          height: 100vh;
+          align-self: center;
+          scale: 0.0000001;
+        "
+        src="./vid.html"
+      >
+      </iframe>
+    </div>
     <div class="header">
       <div class="menu">
         <div><a href="#about-scroll">About Me</a></div>
-        <div><a href="#begin">Shop</a></div>
+        <div><a href="#store-scroll">Shop</a></div>
       </div>
       <div id="title"><b>Online Store</b></div>
     </div>
     <div id="about-scroll">
       <div id="about-us">
         <h2 style="text-align: center">About Me</h2>
-        <div style="align-items: center;text-align: center">
-          I am a cadet of Sainik School Nalanda, presently studying in 
-          10<sup>th</sup> standard. I am a self learned Programmer and 3D Developer. I have worked on C++, React-Native, P5.js, Javascript, Unreal Engine(C++), Unity(C#), and obviously Python<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Div>I love learning and doing same as well.</Div>
+        <div style="align-items: center; text-align: center">
+          I am a cadet of Sainik School Nalanda, presently studying in 10<sup
+            >th</sup
+          >
+          standard. I am a self learned Programmer and 3D Developer. I have
+          worked on C++, React-Native, P5.js, Javascript, Unreal Engine(C++),
+          Unity(C#), and obviously Python<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div>I love learning and doing same as well.</div>
         </div>
       </div>
     </div>
-    <div class="contents">
-      <div class="design" id="begin">
-        <a href="https://drive.google.com/file/d/1u3pZGqnS_gSsUYBZMb5RN1TPoqt6HHuN/view?usp=sharing">
-        <div class="background-edit">
-          
-            <img src="images/1.png" id="img" />
-            <!-- <p class="object"><b>ATTENDANCE APP</b></p> -->
-          <div class="fact">
-            <p  class="object">Download now</p>
-          </div>
+    <div id="store-scroll">
+      <div class="contents">
+        <div class="design">
+          <button style="background-color: #ffffff00" onclick="display();">
+            <div>
+              <img src="images/vid.png" style="width: 100%; height: 100%" />
+            </div>
+          </button>
         </div>
-      </a>
       </div>
+      <div class="contents">
+        <div class="design">
+          <a
+            href="https://drive.google.com/file/d/1u3pZGqnS_gSsUYBZMb5RN1TPoqt6HHuN/view?usp=sharing"
+          >
+            <div class="background-edit">
+              <img src="images/1.png" id="img" />
+              <div class="fact">
+                <p class="object">Download now</p>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
     <footer>
@@ -48,5 +136,9 @@
           style="cursor: url('images/linkpoint2.png'), auto"
       /></a>
     </footer>
+    <script>
+      var a = document.getElementById("vid");
+      a.style.display = "none";
+    </script>
   </body>
 </html>
